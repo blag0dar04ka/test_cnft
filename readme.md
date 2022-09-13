@@ -72,7 +72,7 @@ services:
       POSTGRES_USER: "etl"
       POSTGRES_PASSWORD: "etl_contest"
     volumes:
-        - /Users/vyacheslavdyrenkov/Downloads/test_cnft/:/var/lib/postgresql/data/pgdata
+        - /Users/vyacheslavdyrenkov/Downloads/test_cnft/:/data
 
   psql_dst:
     image: postgres:14.5
@@ -87,7 +87,7 @@ services:
 
 ```shell script 
 vyacheslavdyrenkov@MacBook-Pro test_cnft % docker exec -it $(docker ps -q -f name=test_cnft_psql_src_1) bash
-root@67aeea5ba41d:/# ls /var/lib/postgresql/data/pgdata
+root@67aeea5ba41d:/# ls /data
 ```
 
 Получим следующий вывод
@@ -101,7 +101,7 @@ collection.csv	docker-compose.yml  event.csv  payment_token.csv  public.marketca
 ```
 vyacheslavdyrenkov@MacBook-Pro ~ % psql -h localhost -p 54321 -U etl -W checknft 
 checknft=# create table public.payment_token (id int, createdAt timestamp, updatedAt timestamp, symbol text, address text, imageUrl text, name text, externalId int, decimals int);
-checknft=# COPY public.payment_token FROM '/var/lib/postgresql/data/pgdata/payment_token.csv' CSV HEADER;
+checknft=# COPY public.payment_token FROM '/data/payment_token.csv' CSV HEADER;
 ```
 
 В итоге получим положительный ответ с копированием таблицы. Однако такой вариант довольно громоздок для широких таблиц, поэтому воспользуемся SQL клиетом и загрузим оставшиеся таблицы.
@@ -270,7 +270,7 @@ vyacheslavdyrenkov@MacBook-Pro test_cnft % PGPASSWORD="etl_contest" psql -h loca
 
 ```shell script 
 vyacheslavdyrenkov@MacBook-Pro psql -h localhost -p 54322 -U etl -W checknft 
-checknft=# select * from public.marketcap
+checknft=# select * from public.marketcap;
 ```
 Видим, что таблица появилась.
 

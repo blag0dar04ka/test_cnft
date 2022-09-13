@@ -2,6 +2,35 @@
 
 Тестовое задание
 
+***Q5***:
+<details> 
+    <summary markdown="span">Click to see a query</summary>
+
+```bigquery
+WITH
+  session_time_distr AS (
+  SELECT
+    TIMESTAMP_DIFF(finish_at, starts_at, minute) AS session_time,
+    COUNT(*) AS cnt_session_time
+  FROM
+    `sixth-firmament-337908.homework_tier.sessions_inactivity_mart`
+  GROUP BY
+    session_time ),
+  session_time_distr_with_proportion AS (
+  SELECT
+    *,
+    cnt_session_time / SUM(cnt_session_time) OVER() AS proportion
+  FROM
+    session_time_distr )
+SELECT
+  *,
+  SUM(proportion) OVER(ORDER BY session_time ASC) AS cum_distr_session_time
+FROM
+  session_time_distr_with_proportion
+```
+
+</details>
+
 Описание:   Перед Вами шесть файлов, включая это описание задачи. В docker-compose.yml вы найдете конфигурацию
             двух баз PostgreSQL: база-источник (psql_src) и база-назначение (psql_dst). CSV файлы представляют собой
             нормализованные таблицы для загрузки в базу-источник.

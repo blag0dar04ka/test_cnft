@@ -57,6 +57,7 @@ psql_src_1  | 2022-09-13 21:22:07.162 UTC [1] LOG:  database system is ready to 
 </details>
 Но на самом деле этого недостаточно, нужно добавить **.csv** таблицы в окружение, чтобы потом добавить их в postgres.
 Тут есть множество вариантов, но самый простой -- модифицировать **.yml** файл, добавив в него **volumes**, можно сделать так:
+
 ```shell script 
 services:
   psql_src:
@@ -80,6 +81,7 @@ services:
       POSTGRES_PASSWORD: "etl_contest"
 ```
 Поэтому перезапускаем докер с уже обновленным compose файлом. Теперь проверим, что все файлы деуствительно замаунтились:
+
 ```shell script 
 vyacheslavdyrenkov@MacBook-Pro test_cnft % docker exec -it $(docker ps -q -f name=test_cnft_psql_src_1) bash
 root@67aeea5ba41d:/# ls /var/lib/postgresql/data/pgdata

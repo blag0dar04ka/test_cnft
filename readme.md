@@ -52,6 +52,7 @@ vyacheslavdyrenkov@MacBook-Pro test_cnft % docker-compose up
 Вывод будет следующим
 <details> 
     <summary markdown="span">Result</summary>
+	
 ```shell script
 Starting test_cnft_psql_src_1 ... done
 Starting test_cnft_psql_dst_1 ... done
@@ -83,6 +84,7 @@ psql_src_1  | 2022-09-13 21:22:07.154 UTC [26] LOG:  invalid record length at 0/
 psql_src_1  | 2022-09-13 21:22:07.154 UTC [26] LOG:  redo done at 0/93D8BC8 system usage: CPU: user: 0.00 s, system: 0.00 s, elapsed: 0.00 s
 psql_src_1  | 2022-09-13 21:22:07.162 UTC [1] LOG:  database system is ready to accept connections
 ```
+	
 </details>
 Но на самом деле этого недостаточно, нужно добавить **.csv** таблицы в окружение, чтобы потом добавить их в postgres.
 Тут есть множество вариантов, но самый простой -- модифицировать **.yml** файл, добавив в него **volumes**, можно сделать так:

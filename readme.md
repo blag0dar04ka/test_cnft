@@ -23,7 +23,7 @@ vyacheslavdyrenkov@MacBook-Pro test_cnft % docker-compose up
 Вывод будет следующим
 <details> 
     <summary markdown="span">Result</summary>
-```
+```shell script
 Starting test_cnft_psql_src_1 ... done
 Starting test_cnft_psql_dst_1 ... done
 Attaching to test_cnft_psql_dst_1, test_cnft_psql_src_1
@@ -87,7 +87,7 @@ vyacheslavdyrenkov@MacBook-Pro test_cnft % docker exec -it $(docker ps -q -f nam
 root@67aeea5ba41d:/# ls /var/lib/postgresql/data/pgdata
 ```
 Получим следующий вывод
-```
+```text
 collection.csv	docker-compose.yml  event.csv  payment_token.csv  public.marketcap  task.txt  token.csv
 ```
 Получается, добавили все, что нужно. Теперь необходимо создать таблицы на основе **.csv** файликов. Тут тоже есть множество вариантов, например, используя [psql](https://hub.docker.com/_/postgres/) можно так:
@@ -98,18 +98,18 @@ checknft=# COPY public.payment_token FROM '/var/lib/postgresql/data/pgdata/payme
 ```
 В итоге получим положительный ответ с копированием таблицы. Однако такой вариант довольно громоздок для широких таблиц, поэтому воспользуемся SQL клиетом и загрузим оставшиеся таблицы.
 Я использовал DBeaver со следующими кредами:
-```
-Host: "localhost"
+```json
+{Host: "localhost"
 Port: 54321
 Database: "checknft"
 User: "etl"
-Password: "etl_contest"
+Password: "etl_contest"}
 ```
 Далее через import добавляем оставшиеся таблички в базу-источник, меняя в конфигурации DDL: varchar() -> text и int -> decimal(40,0)
 ### Задание 2
 
 Теперь надо написать SQL-запрос, который считает капитализацию. Его можно написать через редактор в терминале, как при создании таблицы public.payment_token, а можно продолжить использовать DBeaver, в любом случае запрос будет таким
-```
+```bigquery
 with 
 	t as 
 		(select
@@ -179,9 +179,10 @@ order by
 </details>
 
 Далее сохраним запрос в виде отдельной таблицы: 
+
 <details> 
     <summary markdown="span">Show query</summary>
-```
+```bigquery
 with 
 	t as 
 		(select
@@ -245,7 +246,7 @@ FROM
 
 Остался последний шаг -- загрузить полученный результат в базу-назначение.
 Как вариант можно сделать так
-```
+```shell script
 vyacheslavdyrenkov@MacBook-Pro test_cnft % PGPASSWORD="etl_contest" pg_dump -h localhost -p 54321 -U etl -d checknft -t public.marketcap > public.marketcap
 vyacheslavdyrenkov@MacBook-Pro test_cnft % PGPASSWORD="etl_contest" psql -h localhost -p 54322 -U etl -d checknft -f public.marketcap 
 ```

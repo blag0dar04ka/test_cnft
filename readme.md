@@ -2,35 +2,6 @@
 
 Тестовое задание
 
-***Q5***:
-<details> 
-    <summary markdown="span">Click to see a query</summary>
-
-```bigquery
-WITH
-  session_time_distr AS (
-  SELECT
-    TIMESTAMP_DIFF(finish_at, starts_at, minute) AS session_time,
-    COUNT(*) AS cnt_session_time
-  FROM
-    `sixth-firmament-337908.homework_tier.sessions_inactivity_mart`
-  GROUP BY
-    session_time ),
-  session_time_distr_with_proportion AS (
-  SELECT
-    *,
-    cnt_session_time / SUM(cnt_session_time) OVER() AS proportion
-  FROM
-    session_time_distr )
-SELECT
-  *,
-  SUM(proportion) OVER(ORDER BY session_time ASC) AS cum_distr_session_time
-FROM
-  session_time_distr_with_proportion
-```
-
-</details>
-
 Описание:   Перед Вами шесть файлов, включая это описание задачи. В docker-compose.yml вы найдете конфигурацию
             двух баз PostgreSQL: база-источник (psql_src) и база-назначение (psql_dst). CSV файлы представляют собой
             нормализованные таблицы для загрузки в базу-источник.
@@ -86,6 +57,7 @@ psql_src_1  | 2022-09-13 21:22:07.162 UTC [1] LOG:  database system is ready to 
 ```
 	
 </details>
+
 Но на самом деле этого недостаточно, нужно добавить **.csv** таблицы в окружение, чтобы потом добавить их в postgres.
 Тут есть множество вариантов, но самый простой -- модифицировать **.yml** файл, добавив в него **volumes**, можно сделать так:
 
@@ -117,18 +89,24 @@ services:
 vyacheslavdyrenkov@MacBook-Pro test_cnft % docker exec -it $(docker ps -q -f name=test_cnft_psql_src_1) bash
 root@67aeea5ba41d:/# ls /var/lib/postgresql/data/pgdata
 ```
+
 Получим следующий вывод
+
 ```text
 collection.csv	docker-compose.yml  event.csv  payment_token.csv  public.marketcap  task.txt  token.csv
 ```
+
 Получается, добавили все, что нужно. Теперь необходимо создать таблицы на основе **.csv** файликов. Тут тоже есть множество вариантов, например, используя [psql](https://hub.docker.com/_/postgres/) можно так:
+
 ```
 vyacheslavdyrenkov@MacBook-Pro ~ % psql -h localhost -p 54321 -U etl -W checknft 
 checknft=# create table public.payment_token (id int, createdAt timestamp, updatedAt timestamp, symbol text, address text, imageUrl text, name text, externalId int, decimals int);
 checknft=# COPY public.payment_token FROM '/var/lib/postgresql/data/pgdata/payment_token.csv' CSV HEADER;
 ```
+
 В итоге получим положительный ответ с копированием таблицы. Однако такой вариант довольно громоздок для широких таблиц, поэтому воспользуемся SQL клиетом и загрузим оставшиеся таблицы.
 Я использовал DBeaver со следующими кредами:
+
 ```json
 {Host: "localhost"
 Port: 54321
@@ -136,10 +114,12 @@ Database: "checknft"
 User: "etl"
 Password: "etl_contest"}
 ```
+
 Далее через import добавляем оставшиеся таблички в базу-источник, меняя в конфигурации DDL: varchar() -> text и int -> decimal(40,0)
 ### Задание 2
 
 Теперь надо написать SQL-запрос, который считает капитализацию. Его можно написать через редактор в терминале, как при создании таблицы public.payment_token, а можно продолжить использовать DBeaver, в любом случае запрос будет таким
+
 ```bigquery
 with 
 	t as 
@@ -191,8 +171,10 @@ order by
 	collectionid,
 	collectionname
 ```
+
 <details> 
     <summary markdown="span">Result</summary>
+	
 | dte      | collectionid | collectionname | marketcupusd |
 | ----------- | ----------- |  ----------- |  ----------- |
 | 2021-04-30 |	504 |	BoredApeYachtClub |	439.4616796875 |
@@ -213,6 +195,7 @@ order by
 
 <details> 
     <summary markdown="span">Show query</summary>
+	
 ```bigquery
 with 
 	t as 
@@ -277,12 +260,14 @@ FROM
 
 Остался последний шаг -- загрузить полученный результат в базу-назначение.
 Как вариант можно сделать так
+
 ```shell script
 vyacheslavdyrenkov@MacBook-Pro test_cnft % PGPASSWORD="etl_contest" pg_dump -h localhost -p 54321 -U etl -d checknft -t public.marketcap > public.marketcap
 vyacheslavdyrenkov@MacBook-Pro test_cnft % PGPASSWORD="etl_contest" psql -h localhost -p 54322 -U etl -d checknft -f public.marketcap 
 ```
 
 Теперь проверим, что все действительно работает
+
 ```shell script 
 vyacheslavdyrenkov@MacBook-Pro psql -h localhost -p 54322 -U etl -W checknft 
 checknft=# select * from public.marketcap

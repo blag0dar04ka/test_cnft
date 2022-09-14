@@ -115,7 +115,70 @@ User: "etl"
 Password: "etl_contest"}
 ```
 
-Далее через import добавляем оставшиеся таблички в базу-источник, меняя в конфигурации DDL: varchar() -> text и int -> decimal(40,0)
+Далее через import добавляем оставшиеся таблички в базу-источник, меняя в конфигурации DDL нескольких таблиц: varchar() -> text и int -> decimal(40,0)
+
+Конфигурация для public.collection
+
+<details> 
+    <summary markdown="span">Result</summary>
+    
+```bigquery
+CREATE TABLE public.collection (
+	id integer NULL,
+	createdat date NULL,
+	updatedat date NULL,
+	"name" text NULL,
+	externalid text NULL,
+	description text NULL,
+	logo text NULL,
+	creatoraccountid integer NULL,
+	ownerfee integer NULL,
+	protocolfee integer NULL,
+	termsandconditionsurl text NULL,
+	totalsupply integer NULL,
+	categoryid text NULL,
+	externalslug text NULL,
+	waitingforremove boolean NULL,
+	isverified boolean NULL,
+	marketplaceapiurl text NULL,
+	marketplacecollectionname text NULL,
+	marketplacecollectiondescription text NULL,
+	discordurl text NULL,
+	externalurl text NULL,
+	mediumusername text NULL,
+	telegramurl text NULL,
+	twitterusername text NULL,
+	instagramusername text NULL,
+	wikiurl text NULL,
+	imageurl text NULL,
+	featuredimageurl tid NULL,
+	largeimageurl text NULL,
+	bannerimageurl text NULL,
+	onedayvolume real NULL,
+	onedaychange real NULL,
+	onedaysales integer NULL,
+	onedayaverageprice real NULL,
+	sevendayvolume real NULL,
+	sevendaychange real NULL,
+	sevendaysales integer NULL,
+	sevendayaverageprice real NULL,
+	thirtydayvolume real NULL,
+	thirtydaychange real NULL,
+	thirtydaysales integer NULL,
+	thirtydayaverageprice real NULL,
+	totalvolume real NULL,
+	totalsales integer NULL,
+	numowners integer NULL,
+	averageprice real NULL,
+	marketcap real NULL,
+	floorprice real NULL,
+	statsupdatedat text NULL,
+	totalsupplyedition real NULL
+);
+```
+
+</details>
+
 ### Задание 2
 
 Теперь надо написать SQL-запрос, который считает капитализацию. Его можно написать через редактор в терминале, как при создании таблицы public.payment_token, а можно продолжить использовать DBeaver, в любом случае запрос будет таким

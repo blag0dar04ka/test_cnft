@@ -433,7 +433,7 @@ checknft=# select * from public.marketcap;
 <details> 
     <summary markdown="span">Show results</summary>
 
-```bigquery
+```text
     dte     | collectionid |  collectionname   |    marketcupusd    
 ------------+--------------+-------------------+--------------------
  2021-04-30 |          504 | BoredApeYachtClub |             439.52
@@ -451,5 +451,6 @@ checknft=# select * from public.marketcap;
 	
 </details>
 
-Видим, что таблица появилась.
+Видим, что таблица появилась. 
+Полную таблицу можно найти в репозитории вместе с **.md** файлом
 

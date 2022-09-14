@@ -125,8 +125,8 @@ Password: "etl_contest"}
 ```bigquery
 CREATE TABLE public.collection (
 	id integer NULL,
-	createdat date NULL,
-	updatedat date NULL,
+	createdat text NULL,
+	updatedat text NULL,
 	"name" text NULL,
 	externalid text NULL,
 	description text NULL,
@@ -151,7 +151,7 @@ CREATE TABLE public.collection (
 	instagramusername text NULL,
 	wikiurl text NULL,
 	imageurl text NULL,
-	featuredimageurl tid NULL,
+	featuredimageurl text NULL,
 	largeimageurl text NULL,
 	bannerimageurl text NULL,
 	onedayvolume real NULL,

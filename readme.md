@@ -435,7 +435,7 @@ checknft=# select * from public.marketcap;
 	
 
 |    dte     | collectionid |  collectionname   |    marketcupusd    |
-|------------+--------------+-------------------+-------------------- |
+|------------|--------------|-------------------|-------------------- |
 |2021-04-30 |          504 | BoredApeYachtClub |             439.52 |
 |2021-05-01 |          504 | BoredApeYachtClub | 1416202.0687037518 |
 |2021-05-02 |          504 | BoredApeYachtClub |  4256936.197339389 |

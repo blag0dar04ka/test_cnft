@@ -429,5 +429,27 @@ vyacheslavdyrenkov@MacBook-Pro test_cnft % PGPASSWORD="etl_contest" psql -h loca
 vyacheslavdyrenkov@MacBook-Pro psql -h localhost -p 54322 -U etl -W checknft 
 checknft=# select * from public.marketcap;
 ```
+
+<details> 
+    <summary markdown="span">Show results</summary>
+
+```bigquery
+    dte     | collectionid |  collectionname   |    marketcupusd    
+------------+--------------+-------------------+--------------------
+ 2021-04-30 |          504 | BoredApeYachtClub |             439.52
+ 2021-05-01 |          504 | BoredApeYachtClub | 1416202.0687037518
+ 2021-05-02 |          504 | BoredApeYachtClub |  4256936.197339389
+ 2021-05-03 |          504 | BoredApeYachtClub | 3483296.2647099993
+ 2021-05-04 |          504 | BoredApeYachtClub | 1161868.0765489377
+ 2021-05-05 |          504 | BoredApeYachtClub |  611240.3614000004
+ 2021-05-06 |          504 | BoredApeYachtClub |     529983.9087575
+ 2021-05-07 |          504 | BoredApeYachtClub |        331017.8682
+ 2021-05-08 |          504 | BoredApeYachtClub |   271970.149109375
+ 2021-05-09 |          504 | BoredApeYachtClub |        373943.0113
+ ... | ... | ...| ...
+ ```
+	
+</details>
+
 Видим, что таблица появилась.
 

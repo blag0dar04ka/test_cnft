@@ -312,7 +312,7 @@ with
 		from e 
 		join t on e.tokenid  = t.id
 		join c on c.id = t.collectionid 
-		join pt on pt.id = e.paymenttokenid),
+		join pt on pt.id = e.paymenttokenid)
 select 
 	date(date) as dte,
 	collectionid,

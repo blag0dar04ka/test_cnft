@@ -1,0 +1,22 @@
+services:
+  psql_src:
+    image: postgres:14.5
+    ports:
+      - "54321:5432"
+    environment:
+      POSTGRES_DB: "checknft"
+      POSTGRES_USER: "etl"
+      POSTGRES_PASSWORD: "etl_contest"
+    volumes:
+        - /Users/vyacheslavdyrenkov/Downloads/test_cnft/:/data
+
+
+  psql_dst:
+    image: postgres:14.5
+    ports:
+      - "54322:5432"
+    environment:
+      POSTGRES_DB: "checknft"
+      POSTGRES_USER: "etl"
+      POSTGRES_PASSWORD: "etl_contest"
+

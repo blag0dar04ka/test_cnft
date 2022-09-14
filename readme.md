@@ -115,9 +115,9 @@ User: "etl"
 Password: "etl_contest"}
 ```
 
-Далее через import добавляем оставшиеся таблички в базу-источник, меняя в конфигурации DDL нескольких таблиц: varchar() -> text и int -> decimal(40,0)
+Далее через import добавляем оставшиеся таблички в базу-источник, меняя немного изменяя дефолтную конфигурацию DDL следующим образом
 
-Конфигурация для public.collection
+DDL для public.collection
 
 <details> 
     <summary markdown="span">Result</summary>
@@ -178,6 +178,55 @@ CREATE TABLE public.collection (
 ```
 
 </details>
+
+DDL для public.token
+
+<details> 
+    <summary markdown="span">Result</summary>
+	
+```bigquery
+CREATE TABLE public."token" (
+	id integer NULL,
+	createdat text NULL,
+	updatedat text NULL,
+	externalid integer NULL,
+	collectionid integer NULL,
+	contractaddress text NULL,
+	contractid integer NULL,
+	"name" text NULL,
+	description text NULL,
+	unlockablecontent text NULL,
+	iseditablemetadata boolean NULL,
+	quantity integer NULL,
+	previewurl text NULL,
+	animationurl text NULL,
+	filetype text NULL,
+	url text NULL,
+	storagetype text NULL,
+	syncedat text NULL,
+	mintedat text NULL,
+	metaurl text NULL,
+	externalurl text NULL,
+	orderssyncdate text NULL,
+	attributessyncedat text NULL,
+	datafeed text NULL,
+	collectionname text NULL,
+	creatoraccountaddress text NULL,
+	creatoraccountname text NULL,
+	dailypricegrowth text NULL,
+	weeklypricegrowth text NULL,
+	monthlypricegrowth real NULL,
+	totalpricegrowth real NULL,
+	metadataerror boolean NULL,
+	statrarityscore real NULL,
+	croppedpreviewurl text NULL,
+	previewstatus text NULL
+);
+
+```
+	
+</details>
+
 
 ### Задание 2
 

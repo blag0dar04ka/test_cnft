@@ -227,7 +227,52 @@ CREATE TABLE public."token" (
 	
 </details>
 
+DDL для public.event
 
+<details> 
+    <summary markdown="span">Result</summary>
+	
+```bigquery
+CREATE TABLE public."event" (
+	id integer NULL,
+	createdat text NULL,
+	updatedat text NULL,
+	externalid text NULL,
+	tokenid integer NULL,
+	eventtype text NULL,
+	"date" text NULL,
+	datafeed text NULL,
+	auctiontype text NULL,
+	currency text NULL,
+	usdprice decimal(40) NULL,
+	endingprice decimal(40) NULL,
+	startingprice decimal(40) NULL,
+	totalprice decimal(40) NULL,
+	approvedaccount text NULL,
+	bidamount text NULL,
+	duration integer NULL,
+	fromaccount text NULL,
+	quantity real NULL,
+	seller text NULL,
+	toaccount text NULL,
+	winneraccount text NULL,
+	"transaction" text NULL,
+	ownerfee real NULL,
+	protocolfee real NULL,
+	paymenttokenid real NULL,
+	paymenttokenusdprice decimal(40) NULL,
+	paymenttokenethprice decimal(40) NULL,
+	logindex decimal(40) NULL,
+	countrelated integer NULL,
+	saleprotocol text NULL,
+	batchtokenindex real NULL,
+	saleeventindex real NULL,
+	internaltype text NULL
+);
+```
+
+</details>
+	
 ### Задание 2
 
 Теперь надо написать SQL-запрос, который считает капитализацию. Его можно написать через редактор в терминале, как при создании таблицы public.payment_token, а можно продолжить использовать DBeaver, в любом случае запрос будет таким
